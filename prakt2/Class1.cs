@@ -3,62 +3,62 @@ using System.IO;
 
 namespace libmas
 {
-    public static class ArrayHelper
+    public static class masHelp
     {
-        public static void FillArray(int[] array)
+        public static void zapolneniemas(int[] mas)
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < mas.Length; i++)
             {
                 Console.Write($"Введите число {i + 1}: ");
-                if (int.TryParse(Console.ReadLine(), out int number))
+                if (int.TryParse(Console.ReadLine(), out int num))
                 {
-                    array[i] = number;
+                    mas[i] = num;
                 }
                 else
                 {
-                    Console.WriteLine("Некорректный ввод. Попробуйте снова.");
-                    i--; // Повторяем ввод для текущего элемента
+                    Console.WriteLine("ошибка");
+                    i--; // Повторяем ввод
                 }
             }
         }
 
-        public static void ClearArray(int[] array)
+        public static void ochistkamas(int[] mas)
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < mas.Length; i++)
             {
-                array[i] = 0;
+                mas[i] = 0;
             }
         }
 
-        public static void SaveArrayToFile(int[] array, string filePath)
+        public static void Savemas(int[] mas, string file)
         {
-            using (StreamWriter writer = new StreamWriter(filePath))
+            using (StreamWriter writer = new StreamWriter(file))
             {
-                foreach (int number in array)
+                foreach (int num in mas)
                 {
-                    writer.WriteLine(number);
+                    writer.WriteLine(num);
                 }
             }
         }
 
-        public static int[] LoadArrayFromFile(string filePath)
+        public static int[] Loadmas(string file)
         {
-            if (!File.Exists(filePath))
+            if (!File.Exists(file))
             {
                 return new int[0];
             }
 
-            int[] array = new int[File.ReadAllLines(filePath).Length];
+            int[] mas = new int[File.ReadAllLines(file).Length];
             int i = 0;
-            using (StreamReader reader = new StreamReader(filePath))
+            using (StreamReader reader = new StreamReader(file))
             {
                 while (!reader.EndOfStream)
                 {
-                    array[i++] = int.Parse(reader.ReadLine());
+                    mas[i++] = int.Parse(reader.ReadLine());
                 }
             }
 
-            return array;
+            return mas;
         }
     }
 }

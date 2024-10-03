@@ -9,6 +9,8 @@ namespace ProductCalculatorApp
     public partial class MainWindow : Window
     {
         private int[] numbers;
+        private OpenFileDialog openFileDialog = new OpenFileDialog();
+        private SaveFileDialog saveFileDialog = new SaveFileDialog();
 
         public MainWindow()
         {
@@ -20,10 +22,10 @@ namespace ProductCalculatorApp
             if (int.TryParse(tb1.Text, out int n))
             {
                 numbers = new int[n];
-                tb2.Text = ""; // Очищаем текстовое поле для ввода чисел
-                tb3.Text = ""; // Очищаем поле для результата
+                tb2.Text = ""; // Очищаем для ввода чисел
+                tb3.Text = ""; // Очищаем для результата
 
-                // Переходим к следующему шагу: заполнению массива
+                //  заполнению массива
                 bt1.IsEnabled = false;
                 bt2.IsEnabled = true;
                 tb2.IsEnabled = true;
@@ -31,13 +33,13 @@ namespace ProductCalculatorApp
             }
             else
             {
-                MessageBox.Show("Пожалуйста, введите корректное числовое значение для N.");
+                MessageBox.Show("ошибка");
             }
         }
 
         private void bt2_Click(object sender, RoutedEventArgs e)
         {
-            // Заполняем массив числами
+            
             string[] inputNumbers = tb2.Text.Split(' ');
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -60,8 +62,8 @@ namespace ProductCalculatorApp
         private void bt3_Click(object sender, RoutedEventArgs e)
         {
             // Вычисляем произведение
-            int product = ProductCalculator.CalculateProductLessThan3(numbers);
-            tb3.Text = $"Произведение чисел < 3: {product}";
+            int proizvedenie = ProizvedCalc.CalculateProizved3(numbers);
+            tb3.Text = $"{proizvedenie}";
 
             // Переходим к следующему шагу: выводу результатов
             bt3.IsEnabled = false;
@@ -70,15 +72,15 @@ namespace ProductCalculatorApp
 
         private void bt4_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Выводим числа
             string numbersString = "";
             for (int i = 0; i < numbers.Length; i++)
             {
                 numbersString += $"{numbers[i]} ";
             }
-            tb4.Text = $"Введенные числа: {numbersString}";
+            tb4.Text = numbersString;
 
-            
+            // Дополнительные кнопки для сохранения и загрузки
             bt5.IsEnabled = true;
             bt6.IsEnabled = true;
         }
@@ -87,22 +89,23 @@ namespace ProductCalculatorApp
         {
             if (numbers != null)
             {
-          
-                if (SaveFileDialog.ShowDialog() == true)
+                // Сохраняем данные в файл
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    ArrayHelper.SaveArrayToFile(numbers, SaveFileDialog.FileName);
-                    MessageBox.Show("Данные успешно сохранены.");
+                    masHelp.Savemas(numbers, saveFileDialog.FileName);
+                    MessageBox.Show("сохранен");
                 }
             }
         }
 
         private void bt6_Click(object sender, RoutedEventArgs e)
         {
-            if (OpenFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true)
             {
-               
-                numbers = ArrayHelper.LoadArrayFromFile(OpenFileDialog.FileName);
+                // Загружаем данные из файла
+                numbers = masHelp.Loadmas(openFileDialog.FileName);
 
+                // Обновляем текстовые поля
                 tb1.Text = numbers.Length.ToString();
                 bt1.IsEnabled = false;
                 bt2.IsEnabled = false;
@@ -116,10 +119,10 @@ namespace ProductCalculatorApp
         {
             string developer = "Дудина Екатерина";
             int job = 2;
-            string task = "Ввести n целых чисел. Найти произведение чисел < 3. Результат вывести на экран";
+            string task = " Ввести n целых чисел. Найти произведение чисел < 3. Результат вывести на экран";
 
             MessageBox.Show($"Разработчик: {developer}\nНомер работы: {job}\nЗадание: {task}",
-                "О программе"); ;
+                "О программе");
         }
 
         private void MenuItem_Exit(object sender, RoutedEventArgs e)

@@ -2,19 +2,19 @@ using System;
 
 namespace libmas_task
 {
-    public static class ProductCalculator
+    public static class ProizvedCalc
     {
-        public static int CalculateProductLessThan3(int[] numbers)
+        public static int CalculateProizved3(int[] nums)
         {
-            int product = 1;
-            foreach (int number in numbers)
+            int proizvedenie = 1;
+            foreach (int num in nums)
             {
-                if (number < 3)
+                if (num < 3)
                 {
-                    product *= number;
+                    proizvedenie *= num;
                 }
             }
-            return product;
+            return proizvedenie;
         }
     }
 }
